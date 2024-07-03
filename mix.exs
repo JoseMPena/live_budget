@@ -5,11 +5,12 @@ defmodule LiveBudget.MixProject do
     [
       app: :live_budget,
       version: "0.1.0",
-      elixir: "~> 1.14",
+      elixir: "~> 1.17.1",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      dialyzer: dialyzer()
     ]
   end
 
@@ -32,19 +33,16 @@ defmodule LiveBudget.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:bandit, "~> 1.5"},
       {:bcrypt_elixir, "~> 3.0"},
-      {:phoenix, "~> 1.7.14"},
-      {:phoenix_ecto, "~> 4.5"},
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+      {:dns_cluster, "~> 0.1.1"},
+      {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
       {:ecto_sql, "~> 3.10"},
-      {:postgrex, ">= 0.0.0"},
-      {:phoenix_html, "~> 4.1"},
-      {:phoenix_live_reload, "~> 1.2", only: :dev},
-      # TODO bump on release to {:phoenix_live_view, "~> 1.0.0"},
-      {:phoenix_live_view, "~> 1.0.0-rc.1", override: true},
-      {:floki, ">= 0.30.0", only: :test},
-      {:phoenix_live_dashboard, "~> 0.8.3"},
       {:esbuild, "~> 0.8", runtime: Mix.env() == :dev},
-      {:tailwind, "~> 0.2", runtime: Mix.env() == :dev},
+      {:finch, "~> 0.13"},
+      {:floki, ">= 0.30.0", only: :test},
+      {:gettext, "~> 0.20"},
       {:heroicons,
        github: "tailwindlabs/heroicons",
        tag: "v2.1.1",
@@ -52,14 +50,20 @@ defmodule LiveBudget.MixProject do
        app: false,
        compile: false,
        depth: 1},
-      {:swoosh, "~> 1.5"},
-      {:finch, "~> 0.13"},
-      {:telemetry_metrics, "~> 1.0"},
-      {:telemetry_poller, "~> 1.0"},
-      {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
-      {:dns_cluster, "~> 0.1.1"},
-      {:bandit, "~> 1.5"}
+      {:phoenix, "~> 1.7.14"},
+      {:phoenix_ecto, "~> 4.5"},
+      {:phoenix_html, "~> 4.1"},
+      {:phoenix_live_reload, "~> 1.2", only: :dev},
+      # TODO bump on release to {:phoenix_live_view, "~> 1.0.0"},
+      {:phoenix_live_view, "~> 1.0.0-rc.1", override: true},
+      {:phoenix_live_dashboard, "~> 0.8.3"},
+      {:postgrex, ">= 0.0.0"},
+      {:sentry, "~> 10.6"},
+      {:swoosh, "~> 1.5"},
+      {:tailwind, "~> 0.2", runtime: Mix.env() == :dev},
+      {:telemetry_metrics, "~> 1.0"},
+      {:telemetry_poller, "~> 1.0"}
     ]
   end
 
@@ -82,6 +86,14 @@ defmodule LiveBudget.MixProject do
         "esbuild live_budget --minify",
         "phx.digest"
       ]
+    ]
+  end
+
+  defp dialyzer do
+    [
+      plt_core_path: "priv/plts",
+      plt_file: {:no_warn, "priv/plts/dialyzer.plt"},
+      plt_add_apps: [:mix, :ex_unit]
     ]
   end
 end
