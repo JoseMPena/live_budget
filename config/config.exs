@@ -9,7 +9,7 @@ import Config
 
 config :live_budget,
   ecto_repos: [LiveBudget.Repo],
-  generators: [timestamp_type: :utc_datetime]
+  generators: [timestamp_type: :utc_datetime, binary_id: true]
 
 # Configures the endpoint
 config :live_budget, LiveBudgetWeb.Endpoint,

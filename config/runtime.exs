@@ -65,6 +65,12 @@ if config_env() == :prod do
     ],
     secret_key_base: secret_key_base
 
+  config :sentry,
+    dsn: System.get_env("ELIXIR_SENTRY_DSN"),
+    environment_name: System.get_env("MIX_ENV"),
+    enable_source_code_context: true,
+    root_source_code_paths: [File.cwd!()]
+
   # ## SSL Support
   #
   # To get SSL working, you will need to add the `https` key
