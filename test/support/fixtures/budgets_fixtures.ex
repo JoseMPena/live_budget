@@ -21,4 +21,19 @@ defmodule LiveBudget.BudgetsFixtures do
 
     budget
   end
+
+  @doc """
+  Generate a budget_line.
+  """
+  def budget_line_fixture(attrs \\ %{}) do
+    {:ok, budget_line} =
+      attrs
+      |> Enum.into(%{
+        amount: "120.5",
+        concept: "some concept"
+      })
+      |> LiveBudget.Budgets.create_budget_line()
+
+    budget_line
+  end
 end

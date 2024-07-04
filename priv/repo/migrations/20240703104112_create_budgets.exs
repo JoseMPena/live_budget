@@ -8,7 +8,7 @@ defmodule LiveBudget.Repo.Migrations.CreateBudgets do
       add :type, :string
       add :start_at, :utc_datetime
       add :end_at, :utc_datetime
-      add :user_id, references(:users, on_delete: :nothing, type: :binary_id)
+      add :user_id, references(:users, on_delete: :nothing, type: :binary_id), null: false
 
       timestamps(type: :utc_datetime)
     end

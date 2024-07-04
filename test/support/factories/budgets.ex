@@ -1,5 +1,5 @@
 defmodule LiveBudget.BudgetFactory do
-  alias LiveBudget.Budgets.{Budget}
+  alias LiveBudget.Budgets.{Budget, BudgetLine}
 
   defmacro __using__(_opts) do
     quote do
@@ -14,14 +14,14 @@ defmodule LiveBudget.BudgetFactory do
         }
       end
 
-      # def budget_line_factory do
-      #   %BudgetLine{
-      #     amount: "100.0",
-      #     concept: "savings",
-      #     budget: build(:budget),
-      #     category: build(:category)
-      #   }
-      # end
+      def budget_line_factory do
+        %BudgetLine{
+          amount: "100.0",
+          concept: "savings",
+          budget: build(:budget),
+          category: build(:category)
+        }
+      end
 
       defp random_utcdatetime(day) do
         {:ok, date} = Date.new(2023, 03, day)

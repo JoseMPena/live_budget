@@ -17,7 +17,7 @@ defmodule LiveBudget.BudgetsTest do
     end
 
     test "list_budgets/1 returns all budgets from a user", %{budget: budget} do
-      assert Budgets.list_budgets(%{user_id: budget.user_id}) |> Enum.map(fn x -> x.id end) == [
+      assert Budgets.list_budgets(%{user_id: budget.user_id}) |> Enum.map(& &1.id) == [
                budget.id
              ]
 
@@ -80,6 +80,82 @@ defmodule LiveBudget.BudgetsTest do
       assert Dates.utc_beginning_of_month() == budget.start_at
       assert Dates.utc_end_of_month() == budget.end_at
       assert budget.user_id == user.id
+    end
+  end
+
+  describe "budget_lines" do
+    alias LiveBudget.Budgets.BudgetLine
+
+    @invalid_attrs %{amount: nil, concept: nil, budget_id: nil, category_id: nil}
+
+    setup do
+      budget = insert(:budget)
+
+      budget_line =
+        insert(:budget_line, budget: budget)
+
+      %{budget_line: budget_line, user: budget.user, budget: budget}
+    end
+
+    test "list_budget_lines/0 returns all budget_lines", %{
+      budget_line: budget_line,
+      budget: budget
+    } do
+      assert Budgets.list_budget_lines(%{budget_id: budget.id}) |> Enum.map(& &1.id) == [
+               budget_line.id
+             ]
+    end
+
+    test "get_budget_line!/1 returns the budget_line with given id", %{budget_line: budget_line} do
+      assert Budgets.get_budget_line!(budget_line.id).id == budget_line.id
+    end
+
+    test "create_budget_line/1 with valid data creates a budget_line" do
+      valid_attrs = params_with_assocs(:budget_line)
+      assert {:ok, %BudgetLine{} = budget_line} = Budgets.create_budget_line(valid_attrs)
+      assert budget_line.amount == Decimal.new(valid_attrs.amount)
+      assert budget_line.concept == valid_attrs.concept
+      assert budget_line.budget_id == valid_attrs.budget_id
+      assert budget_line.category_id == valid_attrs.category_id
+    end
+
+    test "create_budget_line/1 with invalid data returns error changeset" do
+      assert {:error,
+              %Ecto.Changeset{
+                errors: [
+                  concept: {"can't be blank", _},
+                  amount: {"can't be blank", _},
+                  budget_id: {"can't be blank", _},
+                  category_id: {"can't be blank", _}
+                ]
+              }} = Budgets.create_budget_line(@invalid_attrs)
+    end
+
+    test "update_budget_line/2 with valid data updates the budget_line", %{
+      budget_line: budget_line
+    } do
+      update_attrs = %{amount: "456.7", concept: "some updated concept"}
+
+      assert {:ok, %BudgetLine{} = budget_line} =
+               Budgets.update_budget_line(budget_line, update_attrs)
+
+      assert budget_line.amount == Decimal.new("456.7")
+      assert budget_line.concept == "some updated concept"
+    end
+
+    test "update_budget_line/2 with invalid data returns error changeset", %{
+      budget_line: budget_line
+    } do
+      assert {:error, %Ecto.Changeset{}} = Budgets.update_budget_line(budget_line, @invalid_attrs)
+    end
+
+    test "delete_budget_line/1 deletes the budget_line", %{budget_line: budget_line} do
+      assert {:ok, %BudgetLine{}} = Budgets.delete_budget_line(budget_line)
+      assert_raise Ecto.NoResultsError, fn -> Budgets.get_budget_line!(budget_line.id) end
+    end
+
+    test "change_budget_line/1 returns a budget_line changeset", %{budget_line: budget_line} do
+      assert %Ecto.Changeset{} = Budgets.change_budget_line(budget_line)
     end
   end
 end

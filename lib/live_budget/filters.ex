@@ -55,6 +55,15 @@ defmodule LiveBudget.Filters do
     end)
   end
 
+  def filter_budget_lines_with(query, filter) do
+    query = filter_with(query, filter)
+
+    Enum.reduce(filter, query, fn
+      _, query ->
+        from q in query, preload: [:category]
+    end)
+  end
+
   defp current_date() do
     {{_year, _month, _day} = date, _} = :calendar.local_time()
     {:ok, date} = Date.from_erl(date)

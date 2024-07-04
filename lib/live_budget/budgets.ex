@@ -9,6 +9,8 @@ defmodule LiveBudget.Budgets do
   alias LiveBudget.Utils.Dates
 
   alias LiveBudget.Budgets.Budget
+  alias LiveBudget.Categories
+  alias LiveBudget.Categories.Category
 
   @doc """
   Returns the list of budgets for a user.
@@ -124,5 +126,120 @@ defmodule LiveBudget.Budgets do
         _ -> Repo.rollback("Unknown error")
       end
     end)
+  end
+
+  alias LiveBudget.Budgets.BudgetLine
+
+  @doc """
+  Returns the list of budget_lines.
+
+  ## Examples
+
+      iex> list_budget_lines(%{})
+      [%BudgetLine{}, ...]
+
+  """
+  def list_budget_lines(filters) when is_map(filters) do
+    BudgetLine
+    |> Filters.filter_budget_lines_with(filters)
+    |> Repo.all()
+  end
+
+  @doc """
+  Gets a single budget_line.
+
+  Raises `Ecto.NoResultsError` if the Budget line does not exist.
+
+  ## Examples
+
+      iex> get_budget_line!(123)
+      %BudgetLine{}
+
+      iex> get_budget_line!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_budget_line!(id), do: Repo.get!(BudgetLine, id)
+
+  def get_user_budget_lines(user_id), do: Repo.get_by(BudgetLine, %{user_id: user_id})
+
+  @doc """
+  Creates a budget_line.
+
+  ## Examples
+
+      iex> create_budget_line(%{field: value})
+      {:ok, %BudgetLine{}}
+
+      iex> create_budget_line(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_budget_line(attrs \\ %{}) do
+    %BudgetLine{}
+    |> BudgetLine.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def create_sample_budget_line(%Budget{} = budget, %Category{} = category) do
+    %{
+      amount: Enum.random(100..1000),
+      concept: category.name,
+      budget_id: budget.id,
+      category_id: category.id
+    }
+    |> create_budget_line()
+  end
+
+  def create_sample_budget_lines(%Budget{} = budget) do
+    Categories.list_categories()
+    |> Enum.each(fn category -> create_sample_budget_line(budget, category) end)
+  end
+
+  @doc """
+  Updates a budget_line.
+
+  ## Examples
+
+      iex> update_budget_line(budget_line, %{field: new_value})
+      {:ok, %BudgetLine{}}
+
+      iex> update_budget_line(budget_line, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_budget_line(%BudgetLine{} = budget_line, attrs) do
+    budget_line
+    |> BudgetLine.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a budget_line.
+
+  ## Examples
+
+      iex> delete_budget_line(budget_line)
+      {:ok, %BudgetLine{}}
+
+      iex> delete_budget_line(budget_line)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_budget_line(%BudgetLine{} = budget_line) do
+    Repo.delete(budget_line)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking budget_line changes.
+
+  ## Examples
+
+      iex> change_budget_line(budget_line)
+      %Ecto.Changeset{data: %BudgetLine{}}
+
+  """
+  def change_budget_line(%BudgetLine{} = budget_line, attrs \\ %{}) do
+    BudgetLine.changeset(budget_line, attrs)
   end
 end
