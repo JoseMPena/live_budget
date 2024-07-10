@@ -87,6 +87,8 @@ defmodule LiveBudgetWeb do
       import LiveBudgetWeb.CoreComponents
       import LiveBudgetWeb.Gettext
 
+      alias LiveBudgetWeb.LayoutComponents, as: Layout
+
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
 

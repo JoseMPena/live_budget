@@ -52,6 +52,7 @@ defmodule LiveBudgetWeb.Router do
       live "/users/reset_password/:token", UserResetPasswordLive, :edit
     end
 
+    get "/", PageController, :home
     post "/users/log_in", UserSessionController, :create
   end
 
@@ -63,7 +64,7 @@ defmodule LiveBudgetWeb.Router do
       on_mount: [{LiveBudgetWeb.UserAuth, :ensure_authenticated}] do
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
-      live "/", DashboardLive
+      live "/dashboard", DashboardLive
     end
   end
 
