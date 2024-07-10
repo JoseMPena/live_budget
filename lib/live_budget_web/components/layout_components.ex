@@ -18,7 +18,7 @@ defmodule LiveBudgetWeb.LayoutComponents do
     <nav class="bg-white border-gray-200 dark:bg-gray-900 fluid">
       <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
-          <img src={~p"/images/logo.png"} class="h-8" alt="LiveBudget Logo" />
+          <img src="/images/logo.png" class="h-8" alt="LiveBudget Logo" />
           <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
             LiveBudget
           </span>
@@ -108,7 +108,7 @@ defmodule LiveBudgetWeb.LayoutComponents do
               <li>
                 <.link
                   href={~p"/users/register"}
-                  class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
+                  class="leading-6 font-semibold text-green-700 hover:underline dark:text-green-500"
                 >
                   Register
                 </.link>
@@ -116,7 +116,7 @@ defmodule LiveBudgetWeb.LayoutComponents do
               <li>
                 <.link
                   href={~p"/users/log_in"}
-                  class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
+                  class="leading-6 font-semibold text-green-700 hover:underline dark:text-green-500"
                 >
                   Log in
                 </.link>

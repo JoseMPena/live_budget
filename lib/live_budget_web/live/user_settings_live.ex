@@ -18,8 +18,8 @@ defmodule LiveBudgetWeb.UserSettingsLive do
           phx-submit="update_email"
           phx-change="validate_email"
         >
-          <.input field={@email_form[:email]} type="email" label="Email" required />
-          <.input
+          <Input.primary field={@email_form[:email]} type="email" label="Email" required />
+          <Input.primary
             field={@email_form[:current_password]}
             name="current_password"
             id="current_password_for_email"
@@ -29,7 +29,7 @@ defmodule LiveBudgetWeb.UserSettingsLive do
             required
           />
           <:actions>
-            <.button phx-disable-with="Changing...">Change Email</.button>
+            <Button.button phx-disable-with="Changing...">Change Email</Button.button>
           </:actions>
         </.simple_form>
       </div>
@@ -49,13 +49,18 @@ defmodule LiveBudgetWeb.UserSettingsLive do
             id="hidden_user_email"
             value={@current_email}
           />
-          <.input field={@password_form[:password]} type="password" label="New password" required />
-          <.input
+          <Input.primary
+            field={@password_form[:password]}
+            type="password"
+            label="New password"
+            required
+          />
+          <Input.primary
             field={@password_form[:password_confirmation]}
             type="password"
             label="Confirm new password"
           />
-          <.input
+          <Input.primary
             field={@password_form[:current_password]}
             name="current_password"
             type="password"
@@ -65,7 +70,7 @@ defmodule LiveBudgetWeb.UserSettingsLive do
             required
           />
           <:actions>
-            <.button phx-disable-with="Changing...">Change Password</.button>
+            <Button.button phx-disable-with="Changing...">Change Password</Button.button>
           </:actions>
         </.simple_form>
       </div>

@@ -18,15 +18,15 @@ defmodule LiveBudgetWeb.UserResetPasswordLive do
           Oops, something went wrong! Please check the errors below.
         </.error>
 
-        <.input field={@form[:password]} type="password" label="New password" required />
-        <.input
+        <Input.primary field={@form[:password]} type="password" label="New password" required />
+        <Input.primary
           field={@form[:password_confirmation]}
           type="password"
           label="Confirm new password"
           required
         />
         <:actions>
-          <.button phx-disable-with="Resetting..." class="w-full">Reset Password</.button>
+          <Button.button phx-disable-with="Resetting..." class="w-full">Reset Password</Button.button>
         </:actions>
       </.simple_form>
 

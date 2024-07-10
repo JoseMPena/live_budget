@@ -31,11 +31,13 @@ defmodule LiveBudgetWeb.UserRegistrationLive do
           Oops, something went wrong! Please check the errors below.
         </.error>
 
-        <.input field={@form[:email]} type="email" label="Email" required />
-        <.input field={@form[:password]} type="password" label="Password" required />
+        <Input.primary field={@form[:email]} type="email" label="Email" required />
+        <Input.primary field={@form[:password]} type="password" label="Password" required />
 
         <:actions>
-          <.button phx-disable-with="Creating account..." class="w-full">Create an account</.button>
+          <Button.button phx-disable-with="Creating account..." class="w-full">
+            Create an account
+          </Button.button>
         </:actions>
       </.simple_form>
     </div>

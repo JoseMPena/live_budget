@@ -27,7 +27,7 @@ defmodule Modal do
   attr :on_cancel, JS, default: %JS{}
   slot :inner_block, required: true
 
-  def sign_in(assigns) do
+  def modal(assigns) do
     ~H"""
     <div
       id={@id}
