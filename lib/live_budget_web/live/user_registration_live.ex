@@ -6,16 +6,9 @@ defmodule LiveBudgetWeb.UserRegistrationLive do
 
   def render(assigns) do
     ~H"""
-    <div class="mx-auto max-w-sm">
+    <div class="mx-auto max-w-md">
       <.header class="text-center">
         Register for an account
-        <:subtitle>
-          Already registered?
-          <.link navigate={~p"/users/log_in"} class="font-semibold text-brand hover:underline">
-            Log in
-          </.link>
-          to your account now.
-        </:subtitle>
       </.header>
 
       <.simple_form
@@ -38,6 +31,14 @@ defmodule LiveBudgetWeb.UserRegistrationLive do
           <Button.button phx-disable-with="Creating account..." class="w-full">
             Create an account
           </Button.button>
+        </:actions>
+        <:actions>
+          <p className="text-sm text-gray-900 dark:text-white">
+            Already registered?
+            <.link navigate={~p"/users/log_in"} class="font-semibold text-brand hover:underline">
+              Log in
+            </.link>
+          </p>
         </:actions>
       </.simple_form>
     </div>
