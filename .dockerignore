@@ -1,0 +1,10 @@
+_build
+.elixir_ls
+.vscode
+.github
+.DS_Store
+.idea
+.gitignore
+.dockerignore
+deps
+erl_crash.dump

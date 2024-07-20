@@ -41,6 +41,7 @@ config/*.secret.exs
 
 .idea/
 .lexical/
+.vscode/
 
 Mnesia.nonode@nohost/
 
