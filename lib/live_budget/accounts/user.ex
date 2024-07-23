@@ -58,6 +58,7 @@ defmodule LiveBudget.Accounts.User do
     changeset
     |> validate_required([:password])
     |> validate_length(:password, min: 6, max: 72)
+    |> validate_confirmation(:password, message: "does not match password")
     # Examples of additional password validation:
     # |> validate_format(:password, ~r/[a-z]/, message: "at least one lower case character")
     # |> validate_format(:password, ~r/[A-Z]/, message: "at least one upper case character")

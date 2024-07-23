@@ -7,40 +7,45 @@ defmodule LiveBudgetWeb.UserRegistrationLive do
   def render(assigns) do
     ~H"""
     <div class="mx-auto max-w-md">
-      <.header class="text-center">
-        Register for an account
-      </.header>
+      <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+        <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+          <.header class="text-center">
+            Register for an account
+          </.header>
 
-      <.simple_form
-        for={@form}
-        id="registration_form"
-        phx-submit="save"
-        phx-change="validate"
-        phx-trigger-action={@trigger_submit}
-        action={~p"/users/log_in?_action=registered"}
-        method="post"
-      >
-        <.error :if={@check_errors}>
-          Oops, something went wrong! Please check the errors below.
-        </.error>
+          <.simple_form
+            for={@form}
+            id="registration_form"
+            phx-submit="save"
+            phx-change="validate"
+            phx-trigger-action={@trigger_submit}
+            action={~p"/users/log_in?_action=registered"}
+            method="post"
+          >
+            <.error :if={@check_errors}>
+              Oops, something went wrong! Please check the errors below.
+            </.error>
 
-        <Input.primary field={@form[:email]} type="email" label="Email" required />
-        <Input.primary field={@form[:password]} type="password" label="Password" required />
+            <Input.primary field={@form[:email]} type="email" label="Email" placeholder="name@domain.com" required />
+            <Input.primary field={@form[:password]} type="password" label="Password" placeholder="•••••••" required />
+            <Input.primary field={@form[:password_confirmation]} type="password" label="Password Confirmation" placeholder="•••••••" required />
 
-        <:actions>
-          <Button.button phx-disable-with="Creating account..." class="w-full">
-            Create an account
-          </Button.button>
-        </:actions>
-        <:actions>
-          <p className="text-sm text-gray-900 dark:text-white">
-            Already registered?
-            <.link navigate={~p"/users/log_in"} class="font-semibold text-brand hover:underline">
-              Log in
-            </.link>
-          </p>
-        </:actions>
-      </.simple_form>
+            <:actions>
+              <Button.button phx-disable-with="Creating account..." class="btn btn-brand w-full">
+                Create an account
+              </Button.button>
+            </:actions>
+            <:actions>
+              <p className="text-sm text-gray-900 dark:text-white">
+                Already registered?
+                <.link navigate={~p"/users/log_in"} class="text-brand-hover">
+                  Log In
+                </.link>
+              </p>
+            </:actions>
+          </.simple_form>
+        </div>
+      </div>
     </div>
     """
   end

@@ -108,7 +108,7 @@ defmodule LiveBudgetWeb.LayoutComponents do
               <li>
                 <.link
                   href={~p"/users/register"}
-                  class="leading-6 font-semibold text-green-700 hover:underline dark:text-green-500"
+                  class="leading-6 text-brand-hover"
                 >
                   Register
                 </.link>
@@ -116,7 +116,7 @@ defmodule LiveBudgetWeb.LayoutComponents do
               <li>
                 <.link
                   href={~p"/users/log_in"}
-                  class="leading-6 font-semibold text-green-700 hover:underline dark:text-green-500"
+                  class="leading-6 text-brand-hover"
                 >
                   Log in
                 </.link>

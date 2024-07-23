@@ -1,7 +1,9 @@
 FROM elixir:1.17.1-otp-27-slim
 
+ARG NODE_VERSION=20.10.0
+
 # Install build dependencies
-RUN apt-get update -y && apt-get install -y build-essential git inotify-tools \
+RUN apt-get update -y && apt-get install -y build-essential git inotify-tools npm \
     && apt-get clean && rm -f /var/lib/apt/lists/*_*
 
 # Prepare build dir
@@ -15,8 +17,10 @@ RUN mix local.hex --force && \
 ENV MIX_ENV="dev"
 
 # Install mix dependencies
-COPY mix.exs mix.lock ./
+COPY . ./
 RUN mix deps.get
+
+RUN npm install --prefix assets
 
 # Compile the project
 RUN mix compile

@@ -16,8 +16,20 @@ defmodule LiveBudgetWeb.UserLoginLive do
             class="space-y-4 md:space-y-6"
             phx-update="ignore"
           >
-            <Input.primary field={@form[:email]} type="email" placeholder="Email" required />
-            <Input.primary field={@form[:password]} type="password" placeholder="Password" required />
+            <Input.primary
+              field={@form[:email]}
+              type="email"
+              label="Email"
+              placeholder="name@domain.com"
+              required
+            />
+            <Input.primary
+            field={@form[:password]}
+              type="password"
+              label="Password"
+              placeholder="•••••••"
+              required
+            />
 
             <:actions>
               <Input.input
@@ -28,22 +40,22 @@ defmodule LiveBudgetWeb.UserLoginLive do
               />
               <.link
                 href={~p"/users/reset_password"}
-                class="font-semibold text-green-600 hover:underline dark:text-green-500"
+                class="text-brand-hover"
               >
                 Forgot your password?
               </.link>
             </:actions>
             <:actions>
-              <Button.button phx-disable-with="Logging in..." color="success" class="w-full">
+              <Button.button phx-disable-with="Logging in..." class="btn btn-brand w-full">
                 Log in <span aria-hidden="true">→</span>
               </Button.button>
             </:actions>
             <:actions>
               <p className="text-sm text-gray-900 dark:text-white">
-                Don’t have an account yet?
+                Don't have an account yet?
                 <.link
                   href={~p"/users/register"}
-                  class="font-semibold text-green-600 hover:underline dark:text-green-500"
+                  class="text-brand-hover"
                 >
                   Sign Up
                 </.link>
